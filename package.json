@@ -1,7 +1,7 @@
 {
-  "name": "es6-lib-seed",
-  "version": "0.0.3",
-  "description": "Simple seed project for an ES6 library",
+  "name": "kata-bank-ocr",
+  "version": "0.0.1",
+  "description": "Some Javascript towards solving the Coding Dojo Kata Bank OCR problem",
   "main": "./lib/library.min.js",
   "scripts": {
     "test": "jasmine",
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tinisi/es6-lib-seed.git"
+    "url": "git+https://github.com/tinisi/kata-bank-oc.git"
   },
   "author": "Tinisi",
   "license": "BSD-3-Clause",
   "bugs": {
-    "url": "https://github.com/tinisi/es6-lib-seed/issues"
+    "url": "https://github.com/tinisi/kata-bank-ocr/issues"
   },
-  "homepage": "https://github.com/tinisi/es6-lib-seed#readme",
+  "homepage": "https://github.com/tinisi/kata-bank-ocr#readme",
   "devDependencies": {
     "babel-cli": "^6.10.1",
     "babel-core": "^6.10.4",
