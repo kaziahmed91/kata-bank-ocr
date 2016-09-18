@@ -105,6 +105,13 @@ describe('Recognizer', () => {
       expect(result).toEqual('123456789');
     });
 
+   it('uses a ? character when a string key is not recognized', () => {
+      let recognizer = new Recognizer(testData[12].rawRecord);
+      recognizer.populateStringKeys();
+      let result = recognizer.mapStringKeysToIntegers(recognizer.stringKeys[0]);
+      expect(result).toEqual('49006771?');
+    });
+
   });
 
 
