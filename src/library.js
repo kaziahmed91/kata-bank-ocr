@@ -67,20 +67,12 @@ class Recognizer {
     this.rawStringKeys = stringKeys;
   }
 
-  mapStringKeysToAccountNumber(stringKeys) {
-    let accountNumberCharacters = [];
-    let illegibleCharacterCount = 0;
-    stringKeys.forEach((key, index) => {
-      let translatedNumber = characterMap[key] || '?';
-      accountNumberCharacters[index] = translatedNumber;
-      if ( translatedNumber === '?' ) {
-        illegibleCharacterCount ++;
-      }
-    });
-    let accountNumber = accountNumberCharacters.join('');
+  pushPossibleAccountNumber(stringKeys) {
+    let { possibleAccountNumber, illegibleCharacterCount } = mapStringKeysToAccountNumber(stringKeys);
     let newRecord = getEmptyAccountNumberRecord();
-    newRecord.possibleAccountNumber = accountNumber;
+    newRecord.possibleAccountNumber = possibleAccountNumber;
     newRecord.illegibleCharacterCount = illegibleCharacterCount;
+    newRecord.checksumIsValid = this.isChecksumValid(newRecord);
     this.possibleAccountNumbers.push(newRecord);
   }
 
@@ -117,11 +109,26 @@ class Recognizer {
 
 // private helpers
 
+function mapStringKeysToAccountNumber(stringKeys) {
+  let accountNumberCharacters = [];
+  let illegibleCharacterCount = 0;
+  stringKeys.forEach((key, index) => {
+    let translatedNumber = characterMap[key] || '?';
+    accountNumberCharacters[index] = translatedNumber;
+    if ( translatedNumber === '?' ) {
+      illegibleCharacterCount ++;
+    }
+  });
+  let possibleAccountNumber = accountNumberCharacters.join('');
+  return { possibleAccountNumber, illegibleCharacterCount };
+}
+
 // this defines a schema for possible account number records
 function getEmptyAccountNumberRecord() {
   return {
     possibleAccountNumber: '',
-    illegibleCharacterCount: 0
+    illegibleCharacterCount: 0,
+    checksumIsValid: null
   }
 }
 
