@@ -143,6 +143,39 @@ describe('Recognizer', () => {
 
   });
 
+  describe('Recognizer#isChecksumValid', () => {
 
+    it('calculates a valid checksum from 000000000', () => {
+      let recognizer = new Recognizer(testData[0].rawRecord);
+      recognizer.populateRawStringKeys();
+      recognizer.mapStringKeysToAccountNumber(recognizer.rawStringKeys);
+      let result = recognizer.isChecksumValid(recognizer.possibleAccountNumbers[0]);
+      expect(result).toEqual(true);
+    });
+
+    it('calculates a valid checksum from 899999999', () => {
+      // I know from the test data, that the this error corrected value should be valid
+      let rawRecord = [
+        ' _  _  _  _  _  _  _  _  _ ',
+        '|_||_||_||_||_||_||_||_||_|',
+        '|_| _| _| _| _| _| _| _| _|'
+      ];
+      let recognizer = new Recognizer(rawRecord);
+      recognizer.populateRawStringKeys();
+      recognizer.mapStringKeysToAccountNumber(recognizer.rawStringKeys);
+      let result = recognizer.isChecksumValid(recognizer.possibleAccountNumbers[0]);
+      expect(result).toEqual(true);
+    });
+
+    it('calculates a invalid checksum', () => {
+      // I know from the test data, that the 999999999 is not valid without error correction
+      let recognizer = new Recognizer(testData[9].rawRecord);
+      recognizer.populateRawStringKeys();
+      recognizer.mapStringKeysToAccountNumber(recognizer.rawStringKeys);
+      let result = recognizer.isChecksumValid(recognizer.possibleAccountNumbers[0]);
+      expect(result).toEqual(false);
+    });
+
+  });
 
 });
