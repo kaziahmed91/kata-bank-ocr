@@ -1,5 +1,17 @@
-import util from './util';
 
-export default (input) => {
-  return util().upper('woot' + input + 'yeah');
+class Recognizer {
+
+  constructor(rawRecord) {
+    this.rawRecord = rawRecord;
+    this.stringKeys = [];
+  } 
+
+  populateStringKeys() {
+    let parsedRecord = this.rawRecord;
+    this.stringKeys.push(parsedRecord);
+  }
+
 }
+
+
+export default Recognizer
