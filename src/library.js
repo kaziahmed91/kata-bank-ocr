@@ -46,11 +46,11 @@ class Recognizer {
 
   constructor(rawRecord) {
     this.rawRecord = rawRecord || [];
-    this.stringKeys = [];
-    this.recognized = [];
+    this.rawStringKeys = [];
+    this.possibleAccountNumbers = [];
   } 
 
-  populateStringKeys() {
+  populateRawStringKeys() {
     let stringKeys = ['','','','','','','','','',];
     // each field is 3 characters wide
     let fieldWidth = 3;
@@ -64,7 +64,7 @@ class Recognizer {
         stringKeys[index] = stringKeys[index] + row.slice(index * fieldWidth, (index * fieldWidth) + fieldWidth);
       }
     }
-    this.stringKeys.push(stringKeys);
+    this.rawStringKeys = stringKeys;
   }
 
   mapStringKeysToAccountNumber(stringKeys) {
@@ -81,7 +81,7 @@ class Recognizer {
     let newRecord = getEmptyAccountNumberRecord();
     newRecord.possibleAccountNumber = accountNumber;
     newRecord.illegibleCharacterCount = illegibleCharacterCount;
-    this.recognized.push(newRecord);
+    this.possibleAccountNumbers.push(newRecord);
   }
 
 }
