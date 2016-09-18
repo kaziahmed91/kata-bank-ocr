@@ -87,5 +87,4 @@ class Recognizer {
 
 }
 
-
-export default Recognizer
+export default Recognizer;
