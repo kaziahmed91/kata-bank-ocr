@@ -15,8 +15,9 @@ Some quick design notes.
 * Thinking ahead, this should be a class with data properties for
 	* raw input record
 	* an array with an array of "string keys" pulled from the raw input record (with one entry for now)
-	* an array with "illegible character count" (with one entry for now)
-	* an array of possible account numbers (with one entry for now)
+	* an array of "possibleAccountNumber" records (with one entry for now), with properties for:
+		* account number
+		* illegible character count
 
 #### User Story 2: calculate checksum
 

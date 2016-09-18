@@ -32,7 +32,7 @@ describe('Recognizer', () => {
       let recognizer = new Recognizer(testData[0].rawRecord);
       recognizer.populateStringKeys();
       recognizer.mapStringKeysToAccountNumber(recognizer.stringKeys[0]);
-      let result = recognizer.recognized.possibleAccountNumbers[0];
+      let result = recognizer.recognized[0].possibleAccountNumber;
       expect(result).toEqual('000000000');
     });
 
@@ -40,7 +40,7 @@ describe('Recognizer', () => {
       let recognizer = new Recognizer(testData[1].rawRecord);
       recognizer.populateStringKeys();
       recognizer.mapStringKeysToAccountNumber(recognizer.stringKeys[0]);
-      let result = recognizer.recognized.possibleAccountNumbers[0];
+      let result = recognizer.recognized[0].possibleAccountNumber;
       expect(result).toEqual('111111111');
     });
 
@@ -48,7 +48,7 @@ describe('Recognizer', () => {
       let recognizer = new Recognizer(testData[2].rawRecord);
       recognizer.populateStringKeys();
       recognizer.mapStringKeysToAccountNumber(recognizer.stringKeys[0]);
-      let result = recognizer.recognized.possibleAccountNumbers[0];
+      let result = recognizer.recognized[0].possibleAccountNumber;
       expect(result).toEqual('222222222');
     });
 
@@ -56,7 +56,7 @@ describe('Recognizer', () => {
       let recognizer = new Recognizer(testData[3].rawRecord);
       recognizer.populateStringKeys();
       recognizer.mapStringKeysToAccountNumber(recognizer.stringKeys[0]);
-      let result = recognizer.recognized.possibleAccountNumbers[0];
+      let result = recognizer.recognized[0].possibleAccountNumber;
       expect(result).toEqual('333333333');
     });
 
@@ -64,7 +64,7 @@ describe('Recognizer', () => {
       let recognizer = new Recognizer(testData[4].rawRecord);
       recognizer.populateStringKeys();
       recognizer.mapStringKeysToAccountNumber(recognizer.stringKeys[0]);
-      let result = recognizer.recognized.possibleAccountNumbers[0];
+      let result = recognizer.recognized[0].possibleAccountNumber;
       expect(result).toEqual('444444444');
     });
 
@@ -72,7 +72,7 @@ describe('Recognizer', () => {
       let recognizer = new Recognizer(testData[5].rawRecord);
       recognizer.populateStringKeys();
       recognizer.mapStringKeysToAccountNumber(recognizer.stringKeys[0]);
-      let result = recognizer.recognized.possibleAccountNumbers[0];
+      let result = recognizer.recognized[0].possibleAccountNumber;
       expect(result).toEqual('555555555');
     });
 
@@ -80,7 +80,7 @@ describe('Recognizer', () => {
       let recognizer = new Recognizer(testData[6].rawRecord);
       recognizer.populateStringKeys();
       recognizer.mapStringKeysToAccountNumber(recognizer.stringKeys[0]);
-      let result = recognizer.recognized.possibleAccountNumbers[0];
+      let result = recognizer.recognized[0].possibleAccountNumber;
       expect(result).toEqual('666666666');
     });
 
@@ -88,7 +88,7 @@ describe('Recognizer', () => {
       let recognizer = new Recognizer(testData[7].rawRecord);
       recognizer.populateStringKeys();
       recognizer.mapStringKeysToAccountNumber(recognizer.stringKeys[0]);
-      let result = recognizer.recognized.possibleAccountNumbers[0];
+      let result = recognizer.recognized[0].possibleAccountNumber;
       expect(result).toEqual('777777777');
     });
 
@@ -96,7 +96,7 @@ describe('Recognizer', () => {
       let recognizer = new Recognizer(testData[8].rawRecord);
       recognizer.populateStringKeys();
       recognizer.mapStringKeysToAccountNumber(recognizer.stringKeys[0]);
-      let result = recognizer.recognized.possibleAccountNumbers[0];
+      let result = recognizer.recognized[0].possibleAccountNumber;
       expect(result).toEqual('888888888');
     });
 
@@ -104,7 +104,7 @@ describe('Recognizer', () => {
       let recognizer = new Recognizer(testData[9].rawRecord);
       recognizer.populateStringKeys();
       recognizer.mapStringKeysToAccountNumber(recognizer.stringKeys[0]);
-      let result = recognizer.recognized.possibleAccountNumbers[0];
+      let result = recognizer.recognized[0].possibleAccountNumber;
       expect(result).toEqual('999999999');
     });
 
@@ -112,8 +112,8 @@ describe('Recognizer', () => {
       let recognizer = new Recognizer(testData[10].rawRecord);
       recognizer.populateStringKeys();
       recognizer.mapStringKeysToAccountNumber(recognizer.stringKeys[0]);
-      let result = recognizer.recognized.possibleAccountNumbers[0];
-      let illegibleCharacterCount = recognizer.recognized.illegibleCharacterCount[0];
+      let result = recognizer.recognized[0].possibleAccountNumber;
+      let illegibleCharacterCount = recognizer.recognized[0].illegibleCharacterCount;
       expect(result).toEqual('123456789');
     });
 
@@ -121,7 +121,7 @@ describe('Recognizer', () => {
       let recognizer = new Recognizer(testData[12].rawRecord);
       recognizer.populateStringKeys();
       recognizer.mapStringKeysToAccountNumber(recognizer.stringKeys[0]);
-      let result = recognizer.recognized.possibleAccountNumbers[0];
+      let result = recognizer.recognized[0].possibleAccountNumber;
       expect(result).toEqual('49006771?');
     });
 
@@ -129,7 +129,7 @@ describe('Recognizer', () => {
       let recognizer = new Recognizer(testData[12].rawRecord);
       recognizer.populateStringKeys();
       recognizer.mapStringKeysToAccountNumber(recognizer.stringKeys[0]);
-      let illegibleCharacterCount = recognizer.recognized.illegibleCharacterCount[0];
+      let illegibleCharacterCount = recognizer.recognized[0].illegibleCharacterCount;
       expect(illegibleCharacterCount).toEqual(1);
     });
 
@@ -137,7 +137,7 @@ describe('Recognizer', () => {
       let recognizer = new Recognizer(testData[10].rawRecord);
       recognizer.populateStringKeys();
       recognizer.mapStringKeysToAccountNumber(recognizer.stringKeys[0]);
-      let illegibleCharacterCount = recognizer.recognized.illegibleCharacterCount[0];
+      let illegibleCharacterCount = recognizer.recognized[0].illegibleCharacterCount;
       expect(illegibleCharacterCount).toEqual(0);
     });
 

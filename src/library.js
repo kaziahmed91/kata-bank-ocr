@@ -47,10 +47,7 @@ class Recognizer {
   constructor(rawRecord) {
     this.rawRecord = rawRecord || [];
     this.stringKeys = [];
-    this.recognized = {
-      possibleAccountNumbers: [],
-      illegibleCharacterCount: []
-    }
+    this.recognized = [];
   } 
 
   populateStringKeys() {
@@ -71,20 +68,32 @@ class Recognizer {
   }
 
   mapStringKeysToAccountNumber(stringKeys) {
-    let accountNumbers = [];
+    let accountNumberCharacters = [];
     let illegibleCharacterCount = 0;
     stringKeys.forEach((key, index) => {
       let translatedNumber = characterMap[key] || '?';
-      accountNumbers[index] = translatedNumber;
+      accountNumberCharacters[index] = translatedNumber;
       if ( translatedNumber === '?' ) {
         illegibleCharacterCount ++;
       }
     });
-    let accountNumber = accountNumbers.join('');
-    this.recognized.possibleAccountNumbers.push(accountNumber);
-    this.recognized.illegibleCharacterCount.push(illegibleCharacterCount);
+    let accountNumber = accountNumberCharacters.join('');
+    let newRecord = getEmptyAccountNumberRecord();
+    newRecord.possibleAccountNumber = accountNumber;
+    newRecord.illegibleCharacterCount = illegibleCharacterCount;
+    this.recognized.push(newRecord);
   }
 
+}
+
+// private helpers
+
+// this defines a schema for possible account number records
+function getEmptyAccountNumberRecord() {
+  return {
+    possibleAccountNumber: '',
+    illegibleCharacterCount: 0
+  }
 }
 
 export default Recognizer;
