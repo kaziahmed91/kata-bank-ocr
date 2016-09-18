@@ -47,6 +47,10 @@ class Recognizer {
   constructor(rawRecord) {
     this.rawRecord = rawRecord || [];
     this.stringKeys = [];
+    this.recognized = {
+      possibleAccountNumbers: [],
+      illegibleCharacterCount: []
+    }
   } 
 
   populateStringKeys() {
@@ -66,13 +70,19 @@ class Recognizer {
     this.stringKeys.push(stringKeys);
   }
 
-  mapStringKeysToIntegers(stringKeys) {
+  mapStringKeysToAccountNumber(stringKeys) {
     let accountNumbers = [];
+    let illegibleCharacterCount = 0;
     stringKeys.forEach((key, index) => {
       let translatedNumber = characterMap[key] || '?';
       accountNumbers[index] = translatedNumber;
+      if ( translatedNumber === '?' ) {
+        illegibleCharacterCount ++;
+      }
     });
-    return accountNumbers.join('');
+    let accountNumber = accountNumbers.join('');
+    this.recognized.possibleAccountNumbers.push(accountNumber);
+    this.recognized.illegibleCharacterCount.push(illegibleCharacterCount);
   }
 
 }
