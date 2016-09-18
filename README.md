@@ -22,7 +22,7 @@ Some quick design notes.
 #### User Story 2: calculate checksum
 
 * Write a method that does the math to calculate the checksum.
-* Add to the class a data property with array of true/false values to store checksum success/fail
+* Add to the possibleAccountNumber record a boolean to store success/fail of checksum
 
 #### User Story 3: report for the boss
 
@@ -61,27 +61,15 @@ Based on the preconditions above, this will either be applied to one character (
 	* for each character in the key, if it is a space
 		* replace that space with an underscore
 		* check if the mutated string key is legible as an integer
-			* if it is legible, add an entry to:
-				* the array of possible account numbers
-				* the array of possible string keys
-				* the checksum validity array
-				* the illegible character count entry
+			* if it is legible, add an entry to possibleAccountNumbers
 	* for each character in the key, if it is a space
 		* replace that space with a pipe
 		* check if the mutated string key is legible as an integer
-			* if it is legible, add an entry to:
-				* the array of possible account numbers
-				* the array of possible string keys
-				* the checksum validity array
-				* the illegible character count entry
+			* if it is legible, add an entry to possibleAccountNumbers
 	* for each character in the key, if it is not a space
 		* replace that character (underscore or pipe) with a space
 		* check if the mutated string key is legible as an integer
-			* if it is legible, add an entry to:
-				* the array of possible account numbers
-				* the array of possible string keys
-				* the checksum validity array
-				* the illegible character count entry
+			* if it is legible, add an entry to possibleAccountNumbers
 
 #### Second Phase: Update the report
 

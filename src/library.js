@@ -1,5 +1,5 @@
 
-const characterMap = {
+const CHARACTER_MAP = {
   '\
    \
   |\
@@ -105,6 +105,28 @@ class Recognizer {
     return checksumIsValid;
   }
 
+  // this will likely end up being a private helper,
+  // defining it as class method to bootstrap TDD goodness
+  errorCorrectStringKey(stringKey) {
+    let stringKeyChars = stringKey.split('');
+    let correctedKeyIsLegible = false;
+    let correctedStringKey = '';
+
+    // first we'll to spaces to underscores just to get this going
+    for ( let index = 0; index < stringKeyChars.length; index ++) {
+      if ( stringKeyChars[index] === ' ' ) {
+        let stringKeyCharsCopy = stringKeyChars.slice();
+        stringKeyCharsCopy.splice(index, 1, '_');
+        correctedStringKey = stringKeyCharsCopy.join('');
+        // check if this is now a recognizable character, if it is, we are done
+        if ( CHARACTER_MAP[correctedStringKey] ) {
+          break;
+        }
+      }
+    }
+    return correctedStringKey;
+  }
+
 }
 
 // private helpers
@@ -113,7 +135,9 @@ function mapStringKeysToAccountNumber(stringKeys) {
   let accountNumberCharacters = [];
   let illegibleCharacterCount = 0;
   stringKeys.forEach((key, index) => {
-    let translatedNumber = characterMap[key] || '?';
+    // this is a coersion bug waiting to happen...
+    // it only works for zeros because we are mapping to the string '0'
+    let translatedNumber = CHARACTER_MAP[key] || '?';
     accountNumberCharacters[index] = translatedNumber;
     if ( translatedNumber === '?' ) {
       illegibleCharacterCount ++;

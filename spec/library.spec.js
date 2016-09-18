@@ -195,4 +195,23 @@ describe('Recognizer', () => {
 
   });
 
+  describe('Recognizer#errorCorrectStringKey', () => {
+
+    it('replaces space with underscore and returns a legible string key', () => {
+let illegibleTwo = '\
+   \
+ _|\
+|_ ';
+let legibleTwo = '\
+ _ \
+ _|\
+|_ ';
+      // constructing with the zeros test case, but just a placeholder, not used in this assertion
+      let recognizer = new Recognizer(testData[0].rawRecord);
+      let result = recognizer.errorCorrectStringKey(illegibleTwo);
+      expect(result).toEqual(legibleTwo);
+    })
+
+  });
+
 });
