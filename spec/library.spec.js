@@ -206,10 +206,14 @@ let legibleTwo = '\
  _ \
  _|\
 |_ ';
+      // just making an array so we can test the looping, this is very temporary
+      let testStringKey = [legibleTwo,legibleTwo,illegibleTwo,legibleTwo];
       // constructing with the zeros test case, but just a placeholder, not used in this assertion
       let recognizer = new Recognizer(testData[0].rawRecord);
-      let result = recognizer.errorCorrectStringKey(illegibleTwo);
-      expect(result).toEqual(legibleTwo);
+      let result = recognizer.errorCorrectStringKeys(testStringKey);
+      expect(result[0].length).toEqual(4);
+      // we expect the third one to be corrected
+      expect(result[0][2]).toEqual(legibleTwo);
     })
 
   });

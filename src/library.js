@@ -107,24 +107,34 @@ class Recognizer {
 
   // this will likely end up being a private helper,
   // defining it as class method to bootstrap TDD goodness
-  errorCorrectStringKey(stringKey) {
-    let stringKeyChars = stringKey.split('');
-    let correctedKeyIsLegible = false;
-    let correctedStringKey = '';
+  errorCorrectStringKeys(stringKeys) {
+    let correctedStringKeyArrays = [];
 
-    // first we'll to spaces to underscores just to get this going
-    for ( let index = 0; index < stringKeyChars.length; index ++) {
-      if ( stringKeyChars[index] === ' ' ) {
-        let stringKeyCharsCopy = stringKeyChars.slice();
-        stringKeyCharsCopy.splice(index, 1, '_');
-        correctedStringKey = stringKeyCharsCopy.join('');
-        // check if this is now a recognizable character, if it is, we are done
-        if ( CHARACTER_MAP[correctedStringKey] ) {
-          break;
+    for ( let stringKeyIndex = 0; stringKeyIndex < stringKeys.length; stringKeyIndex ++ ) {
+      let stringKeyChars = stringKeys[stringKeyIndex].split('');
+      let correctedStringKey = '';
+
+      // first we'll to spaces to underscores just to get this going
+      for ( let stringKeyCharsIndex = 0; stringKeyCharsIndex < stringKeyChars.length; stringKeyCharsIndex ++ ) {
+        if ( stringKeyChars[stringKeyCharsIndex] === ' ' ) {
+          let stringKeyCharsCopy = stringKeyChars.slice();
+          stringKeyCharsCopy.splice(stringKeyCharsIndex, 1, '_');
+          correctedStringKey = stringKeyCharsCopy.join('');
+          // check if this is now a recognizable character, if it is, we are done
+          // this is a coersion bug waiting to happen...
+          // it only works for zeros because we are mapping to the string '0'
+          if ( CHARACTER_MAP[correctedStringKey] ) {
+            // make a copy
+            let correctedStringKeys = stringKeys.slice();
+            // splice in the newly corrected legible key
+            correctedStringKeys.splice(stringKeyIndex, 1, correctedStringKey);
+            // push on to the return array and keep looping...
+            correctedStringKeyArrays.push(correctedStringKeys);
+          }
         }
       }
     }
-    return correctedStringKey;
+    return correctedStringKeyArrays;
   }
 
 }
