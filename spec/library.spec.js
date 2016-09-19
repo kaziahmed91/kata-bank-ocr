@@ -31,7 +31,7 @@ describe('Recognizer', () => {
     it('returns a translated account number for 000000000', () => {
       let recognizer = new Recognizer(testData[0].rawRecord);
       recognizer.populateRawStringKeys();
-      recognizer.pushPossibleAccountNumber(recognizer.rawStringKeys);
+      recognizer.pushPossibleAccountNumber(recognizer.rawStringKeys, true);
       let result = recognizer.possibleAccountNumbers[0].possibleAccountNumber;
       expect(result).toEqual('000000000');
     });
@@ -39,7 +39,7 @@ describe('Recognizer', () => {
     it('returns a translated account number for 111111111', () => {
       let recognizer = new Recognizer(testData[1].rawRecord);
       recognizer.populateRawStringKeys();
-      recognizer.pushPossibleAccountNumber(recognizer.rawStringKeys);
+      recognizer.pushPossibleAccountNumber(recognizer.rawStringKeys, true);
       let result = recognizer.possibleAccountNumbers[0].possibleAccountNumber;
       expect(result).toEqual('111111111');
     });
@@ -47,7 +47,7 @@ describe('Recognizer', () => {
     it('returns a translated account number for 222222222', () => {
       let recognizer = new Recognizer(testData[2].rawRecord);
       recognizer.populateRawStringKeys();
-      recognizer.pushPossibleAccountNumber(recognizer.rawStringKeys);
+      recognizer.pushPossibleAccountNumber(recognizer.rawStringKeys, true);
       let result = recognizer.possibleAccountNumbers[0].possibleAccountNumber;
       expect(result).toEqual('222222222');
     });
@@ -55,7 +55,7 @@ describe('Recognizer', () => {
     it('returns a translated account number for 333333333', () => {
       let recognizer = new Recognizer(testData[3].rawRecord);
       recognizer.populateRawStringKeys();
-      recognizer.pushPossibleAccountNumber(recognizer.rawStringKeys);
+      recognizer.pushPossibleAccountNumber(recognizer.rawStringKeys, true);
       let result = recognizer.possibleAccountNumbers[0].possibleAccountNumber;
       expect(result).toEqual('333333333');
     });
@@ -63,7 +63,7 @@ describe('Recognizer', () => {
     it('returns a translated account number for 444444444', () => {
       let recognizer = new Recognizer(testData[4].rawRecord);
       recognizer.populateRawStringKeys();
-      recognizer.pushPossibleAccountNumber(recognizer.rawStringKeys);
+      recognizer.pushPossibleAccountNumber(recognizer.rawStringKeys, true);
       let result = recognizer.possibleAccountNumbers[0].possibleAccountNumber;
       expect(result).toEqual('444444444');
     });
@@ -71,7 +71,7 @@ describe('Recognizer', () => {
     it('returns a translated account number for 555555555', () => {
       let recognizer = new Recognizer(testData[5].rawRecord);
       recognizer.populateRawStringKeys();
-      recognizer.pushPossibleAccountNumber(recognizer.rawStringKeys);
+      recognizer.pushPossibleAccountNumber(recognizer.rawStringKeys, true);
       let result = recognizer.possibleAccountNumbers[0].possibleAccountNumber;
       expect(result).toEqual('555555555');
     });
@@ -79,7 +79,7 @@ describe('Recognizer', () => {
     it('returns a translated account number for 666666666', () => {
       let recognizer = new Recognizer(testData[6].rawRecord);
       recognizer.populateRawStringKeys();
-      recognizer.pushPossibleAccountNumber(recognizer.rawStringKeys);
+      recognizer.pushPossibleAccountNumber(recognizer.rawStringKeys, true);
       let result = recognizer.possibleAccountNumbers[0].possibleAccountNumber;
       expect(result).toEqual('666666666');
     });
@@ -87,7 +87,7 @@ describe('Recognizer', () => {
     it('returns a translated account number for 777777777', () => {
       let recognizer = new Recognizer(testData[7].rawRecord);
       recognizer.populateRawStringKeys();
-      recognizer.pushPossibleAccountNumber(recognizer.rawStringKeys);
+      recognizer.pushPossibleAccountNumber(recognizer.rawStringKeys, true);
       let result = recognizer.possibleAccountNumbers[0].possibleAccountNumber;
       expect(result).toEqual('777777777');
     });
@@ -95,7 +95,7 @@ describe('Recognizer', () => {
     it('returns a translated account number for 888888888', () => {
       let recognizer = new Recognizer(testData[8].rawRecord);
       recognizer.populateRawStringKeys();
-      recognizer.pushPossibleAccountNumber(recognizer.rawStringKeys);
+      recognizer.pushPossibleAccountNumber(recognizer.rawStringKeys, true);
       let result = recognizer.possibleAccountNumbers[0].possibleAccountNumber;
       expect(result).toEqual('888888888');
     });
@@ -103,7 +103,7 @@ describe('Recognizer', () => {
     it('returns a translated account number for 999999999', () => {
       let recognizer = new Recognizer(testData[9].rawRecord);
       recognizer.populateRawStringKeys();
-      recognizer.pushPossibleAccountNumber(recognizer.rawStringKeys);
+      recognizer.pushPossibleAccountNumber(recognizer.rawStringKeys, true);
       let result = recognizer.possibleAccountNumbers[0].possibleAccountNumber;
       expect(result).toEqual('999999999');
     });
@@ -111,7 +111,7 @@ describe('Recognizer', () => {
     it('returns a translated account number for 123456789', () => {
       let recognizer = new Recognizer(testData[10].rawRecord);
       recognizer.populateRawStringKeys();
-      recognizer.pushPossibleAccountNumber(recognizer.rawStringKeys);
+      recognizer.pushPossibleAccountNumber(recognizer.rawStringKeys, true);
       let result = recognizer.possibleAccountNumbers[0].possibleAccountNumber;
       let illegibleCharacterCount = recognizer.possibleAccountNumbers[0].illegibleCharacterCount;
       expect(result).toEqual('123456789');
@@ -120,7 +120,7 @@ describe('Recognizer', () => {
     it('uses a ? character when a string key is not recognized', () => {
       let recognizer = new Recognizer(testData[12].rawRecord);
       recognizer.populateRawStringKeys();
-      recognizer.pushPossibleAccountNumber(recognizer.rawStringKeys);
+      recognizer.pushPossibleAccountNumber(recognizer.rawStringKeys, true);
       let result = recognizer.possibleAccountNumbers[0].possibleAccountNumber;
       expect(result).toEqual('49006771?');
     });
@@ -128,7 +128,7 @@ describe('Recognizer', () => {
     it('increments the illegibleCharacterCount when a character is not recognized', () => {
       let recognizer = new Recognizer(testData[12].rawRecord);
       recognizer.populateRawStringKeys();
-      recognizer.pushPossibleAccountNumber(recognizer.rawStringKeys);
+      recognizer.pushPossibleAccountNumber(recognizer.rawStringKeys, true);
       let illegibleCharacterCount = recognizer.possibleAccountNumbers[0].illegibleCharacterCount;
       expect(illegibleCharacterCount).toEqual(1);
     });
@@ -136,7 +136,7 @@ describe('Recognizer', () => {
     it('does not increment the illegibleCharacterCount when all characters are recognized', () => {
       let recognizer = new Recognizer(testData[10].rawRecord);
       recognizer.populateRawStringKeys();
-      recognizer.pushPossibleAccountNumber(recognizer.rawStringKeys);
+      recognizer.pushPossibleAccountNumber(recognizer.rawStringKeys, true);
       let illegibleCharacterCount = recognizer.possibleAccountNumbers[0].illegibleCharacterCount;
       expect(illegibleCharacterCount).toEqual(0);
     });
@@ -144,7 +144,7 @@ describe('Recognizer', () => {
     it('populates the checksumIsValid property with true when checksum is valid for 000000000', () => {
       let recognizer = new Recognizer(testData[0].rawRecord);
       recognizer.populateRawStringKeys();
-      recognizer.pushPossibleAccountNumber(recognizer.rawStringKeys);
+      recognizer.pushPossibleAccountNumber(recognizer.rawStringKeys, true);
       let checksumIsValid = recognizer.possibleAccountNumbers[0].checksumIsValid;
       expect(checksumIsValid).toEqual(true);
     });
@@ -153,7 +153,7 @@ describe('Recognizer', () => {
       // I know from the test data, that the 999999999 is not valid without error correction
       let recognizer = new Recognizer(testData[9].rawRecord);
       recognizer.populateRawStringKeys();
-      recognizer.pushPossibleAccountNumber(recognizer.rawStringKeys);
+      recognizer.pushPossibleAccountNumber(recognizer.rawStringKeys, true);
       let checksumIsValid = recognizer.possibleAccountNumbers[0].checksumIsValid;
       expect(checksumIsValid).toEqual(false);
     });
@@ -165,7 +165,7 @@ describe('Recognizer', () => {
     it('calculates a valid checksum from 000000000', () => {
       let recognizer = new Recognizer(testData[0].rawRecord);
       recognizer.populateRawStringKeys();
-      recognizer.pushPossibleAccountNumber(recognizer.rawStringKeys);
+      recognizer.pushPossibleAccountNumber(recognizer.rawStringKeys, true);
       let result = recognizer.isChecksumValid(recognizer.possibleAccountNumbers[0]);
       expect(result).toEqual(true);
     });
@@ -179,7 +179,7 @@ describe('Recognizer', () => {
       ];
       let recognizer = new Recognizer(rawRecord);
       recognizer.populateRawStringKeys();
-      recognizer.pushPossibleAccountNumber(recognizer.rawStringKeys);
+      recognizer.pushPossibleAccountNumber(recognizer.rawStringKeys, true);
       let result = recognizer.isChecksumValid(recognizer.possibleAccountNumbers[0]);
       expect(result).toEqual(true);
     });
@@ -188,32 +188,26 @@ describe('Recognizer', () => {
       // I know from the test data, that the 999999999 is not valid without error correction
       let recognizer = new Recognizer(testData[9].rawRecord);
       recognizer.populateRawStringKeys();
-      recognizer.pushPossibleAccountNumber(recognizer.rawStringKeys);
+      recognizer.pushPossibleAccountNumber(recognizer.rawStringKeys, true);
       let result = recognizer.isChecksumValid(recognizer.possibleAccountNumbers[0]);
       expect(result).toEqual(false);
     });
 
   });
 
-  describe('Recognizer#errorCorrectStringKey', () => {
+  describe('Recognizer#correctForErrors', () => {
 
-    it('replaces space with underscore and returns a legible string key', () => {
-let illegibleTwo = '\
-   \
- _|\
-|_ ';
-let legibleTwo = '\
- _ \
- _|\
-|_ ';
-      // just making an array so we can test the looping, this is very temporary
-      let testStringKey = [legibleTwo,legibleTwo,illegibleTwo,legibleTwo];
-      // constructing with the zeros test case, but just a placeholder, not used in this assertion
-      let recognizer = new Recognizer(testData[0].rawRecord);
-      let result = recognizer.errorCorrectStringKeys(testStringKey);
-      expect(result[0].length).toEqual(4);
-      // we expect the third one to be corrected
-      expect(result[0][2]).toEqual(legibleTwo);
+    it('corrects errors and pushes numbers that pass the checksum into the array of possibleAccountNumbers', () => {
+      // I know from the test data that this record should be ambigious
+      let recognizer = new Recognizer(testData[18].rawRecord);
+      recognizer.populateRawStringKeys();
+      // error correct, starting with the raw string keys
+      recognizer.correctForErrors(recognizer.rawStringKeys);
+      // and assert against the test data from the assignment, all looks good!
+      expect(recognizer.possibleAccountNumbers.length).toEqual(3);
+      expect(recognizer.possibleAccountNumbers[0].possibleAccountNumber).toEqual('888886888');
+      expect(recognizer.possibleAccountNumbers[1].possibleAccountNumber).toEqual('888888988');
+      expect(recognizer.possibleAccountNumbers[2].possibleAccountNumber).toEqual('888888880');
     })
 
   });

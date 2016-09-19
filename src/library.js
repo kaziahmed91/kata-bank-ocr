@@ -67,13 +67,37 @@ class Recognizer {
     this.rawStringKeys = stringKeys;
   }
 
-  pushPossibleAccountNumber(stringKeys) {
+  pushPossibleAccountNumber(stringKeys, pushInvalids=false) {
     let { possibleAccountNumber, illegibleCharacterCount } = mapStringKeysToAccountNumber(stringKeys);
     let newRecord = getEmptyAccountNumberRecord();
     newRecord.possibleAccountNumber = possibleAccountNumber;
     newRecord.illegibleCharacterCount = illegibleCharacterCount;
     newRecord.checksumIsValid = this.isChecksumValid(newRecord);
-    this.possibleAccountNumbers.push(newRecord);
+    let shouldPush = (pushInvalids || (!newRecord.illegibleCharacterCount && newRecord.checksumIsValid));
+    if ( shouldPush ) {
+      this.possibleAccountNumbers.push(newRecord);
+    }
+  }
+
+  correctForErrors(stringKeys) {
+    // these are the possible search/replace pairs will use to fix illegible string keys
+    let corrections = [{
+      search: / /,
+      replace: '_'
+    },{
+      search: / /,
+      replace: '|'
+    },{
+      search: /[_|]/,
+      replace: ' '
+    }];
+    for ( let correction of corrections ) {
+      let correctedStringKeys = errorCorrectStringKeys(stringKeys, correction.search, correction.replace);
+      // now push them on to the the array of possibles
+      for ( let correctedStringKey of correctedStringKeys ) {
+        this.pushPossibleAccountNumber(correctedStringKey);
+      }
+    }
   }
 
   isChecksumValid(possibleAccountNumber) {
@@ -103,38 +127,6 @@ class Recognizer {
       }
     }
     return checksumIsValid;
-  }
-
-  // this will likely end up being a private helper,
-  // defining it as class method to bootstrap TDD goodness
-  errorCorrectStringKeys(stringKeys) {
-    let correctedStringKeyArrays = [];
-
-    for ( let stringKeyIndex = 0; stringKeyIndex < stringKeys.length; stringKeyIndex ++ ) {
-      let stringKeyChars = stringKeys[stringKeyIndex].split('');
-      let correctedStringKey = '';
-
-      // first we'll to spaces to underscores just to get this going
-      for ( let stringKeyCharsIndex = 0; stringKeyCharsIndex < stringKeyChars.length; stringKeyCharsIndex ++ ) {
-        if ( stringKeyChars[stringKeyCharsIndex] === ' ' ) {
-          let stringKeyCharsCopy = stringKeyChars.slice();
-          stringKeyCharsCopy.splice(stringKeyCharsIndex, 1, '_');
-          correctedStringKey = stringKeyCharsCopy.join('');
-          // check if this is now a recognizable character, if it is, we are done
-          // this is a coersion bug waiting to happen...
-          // it only works for zeros because we are mapping to the string '0'
-          if ( CHARACTER_MAP[correctedStringKey] ) {
-            // make a copy
-            let correctedStringKeys = stringKeys.slice();
-            // splice in the newly corrected legible key
-            correctedStringKeys.splice(stringKeyIndex, 1, correctedStringKey);
-            // push on to the return array and keep looping...
-            correctedStringKeyArrays.push(correctedStringKeys);
-          }
-        }
-      }
-    }
-    return correctedStringKeyArrays;
   }
 
 }
@@ -169,6 +161,36 @@ function getEmptyAccountNumberRecord() {
 function getAccountCharacterIntAt(numToCheck, index) {
   let stringChar = numToCheck.slice(index, index + 1);
   return parseInt(stringChar, 10);
+}
+
+function errorCorrectStringKeys(stringKeys, search, replace) {
+  let correctedStringKeyArrays = [];
+
+  for ( let stringKeyIndex = 0; stringKeyIndex < stringKeys.length; stringKeyIndex ++ ) {
+    let stringKeyChars = stringKeys[stringKeyIndex].split('');
+    let correctedStringKey = '';
+    // first we'll to spaces to underscores just to get this going
+    for ( let stringKeyCharsIndex = 0; stringKeyCharsIndex < stringKeyChars.length; stringKeyCharsIndex ++ ) {
+      if ( stringKeyChars[stringKeyCharsIndex].match(search) !== null ) {
+        let stringKeyCharsCopy = stringKeyChars.slice();
+        stringKeyCharsCopy.splice(stringKeyCharsIndex, 1, replace);
+        correctedStringKey = stringKeyCharsCopy.join('');
+        // check if this is now a recognizable character, if it is, we are done
+        // this is a coersion bug waiting to happen...
+        // it only works for zeros because we are mapping to the string '0'
+        if ( CHARACTER_MAP[correctedStringKey] ) {
+          // make a copy of the original array
+          let correctedStringKeys = stringKeys.slice();
+          // splice in the newly corrected legible key
+          correctedStringKeys.splice(stringKeyIndex, 1, correctedStringKey);
+          // push on to the return array and keep looping...
+          correctedStringKeyArrays.push(correctedStringKeys);
+        }
+      }
+    }
+  }
+
+  return correctedStringKeyArrays;
 }
 
 export default Recognizer;
